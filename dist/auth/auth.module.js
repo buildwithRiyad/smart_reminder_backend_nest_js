@@ -28,8 +28,12 @@ exports.AuthModule = AuthModule = __decorate([
             }),
             users_module_1.UsersModule,
             jwt_1.JwtModule.registerAsync({
-                imports: [config_1.ConfigModule],
-                inject: [config_1.ConfigService],
+                imports: [
+                    config_1.ConfigModule
+                ],
+                inject: [
+                    config_1.ConfigService
+                ],
                 useFactory: (config) => ({
                     secret: config.get('JWT_SECRET'),
                     signOptions: {
@@ -38,7 +42,9 @@ exports.AuthModule = AuthModule = __decorate([
                 }),
             }),
         ],
-        controllers: [auth_controller_1.AuthController],
+        controllers: [
+            auth_controller_1.AuthController
+        ],
         providers: [
             auth_service_1.AuthService,
             google_strategy_1.GoogleStrategy,

@@ -4,6 +4,6 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
-    getProfile(user: User): User;
-    updateProfile(user: User, updateProfileDto: UpdateProfileDto): Promise<User>;
+    getProfile(user: User): Promise<User>;
+    updateProfile(user: User, dto: UpdateProfileDto): Promise<User>;
 }

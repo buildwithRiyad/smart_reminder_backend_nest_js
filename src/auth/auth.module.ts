@@ -12,8 +12,10 @@ import { UsersModule } from '../users/users.module';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
+
 @Module({
   imports: [
+
     ConfigModule,
 
     PassportModule.register({
@@ -23,20 +25,40 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     UsersModule,
 
     JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
 
-      useFactory: (config: ConfigService) => ({
-        secret: config.get<string>('JWT_SECRET'),
+      imports: [
+        ConfigModule
+      ],
+
+      inject: [
+        ConfigService
+      ],
+
+      useFactory: (
+        config: ConfigService
+      ) => ({
+
+        secret: config.get<string>(
+          'JWT_SECRET'
+        ),
 
         signOptions: {
-          expiresIn: config.get<string>('JWT_EXPIRES_IN'),
+          expiresIn: config.get<string>(
+            'JWT_EXPIRES_IN'
+          ),
         },
+
       }),
+
     }),
+
   ],
 
-  controllers: [AuthController],
+
+  controllers: [
+    AuthController
+  ],
+
 
   providers: [
     AuthService,
@@ -44,9 +66,11 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     JwtStrategy,
   ],
 
+
   exports: [
     AuthService,
     JwtModule,
   ],
+
 })
 export class AuthModule {}

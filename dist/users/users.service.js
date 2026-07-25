@@ -21,47 +21,60 @@ let UsersService = class UsersService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
-    async findById(id) {
-        return this.userRepository.findOne({ where: { id } });
-    }
     async findByEmail(email) {
-        return this.userRepository.findOne({ where: { email } });
+        return this.userRepository.findOne({
+            where: {
+                email,
+            },
+        });
     }
-    async findByGoogleId(googleId) {
-        return this.userRepository.findOne({ where: { googleId } });
+    async findById(id) {
+        return this.userRepository.findOne({
+            where: {
+                id,
+            },
+        });
     }
-    async create(data) {
-        const user = this.userRepository.create(data);
-        return this.userRepository.save(user);
+    async findOrCreateGoogleUser(profile) {
+        const { id: googleId, emails, displayName, photos, } = profile;
+        const email = emails?.[0]?.value;
+        const name = displayName || email;
+        const avatar = photos?.[0]?.value || null;
+        let user = await this.findByEmail(email);
+        if (!user) {
+            user =
+                this.userRepository.create({
+                    googleId,
+                    email,
+                    name,
+                    avatar,
+                    timezone: 'Asia/Dhaka',
+                    notificationPreferences: {
+                        email: true,
+                        telegram: false,
+                    },
+                });
+            return this.userRepository.save(user);
+        }
+        if (!user.googleId) {
+            user.googleId = googleId;
+            user.name = name;
+            user.avatar = avatar;
+            return this.userRepository.save(user);
+        }
+        return user;
     }
-    async update(id, data) {
+    async getProfile(id) {
         const user = await this.findById(id);
         if (!user) {
             throw new common_1.NotFoundException('User not found');
         }
-        Object.assign(user, data);
-        return this.userRepository.save(user);
+        return user;
     }
-    async findOrCreateGoogleUser(profile) {
-        const { id: googleId, emails, displayName, photos } = profile;
-        const email = emails?.[0]?.value;
-        if (!email) {
-            throw new Error('Google profile does not contain an email');
-        }
-        let user = await this.findByGoogleId(googleId);
-        if (user)
-            return user;
-        user = await this.findByEmail(email);
-        if (user) {
-            user.googleId = googleId;
-            return this.userRepository.save(user);
-        }
-        return this.create({
-            email,
-            googleId,
-            name: displayName,
-            avatar: photos?.[0]?.value,
-        });
+    async updateProfile(id, dto) {
+        const user = await this.getProfile(id);
+        Object.assign(user, dto);
+        return this.userRepository.save(user);
     }
 };
 exports.UsersService = UsersService;
