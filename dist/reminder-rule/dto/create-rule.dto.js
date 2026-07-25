@@ -23,18 +23,11 @@ __decorate([
     __metadata("design:type", Number)
 ], CreateRuleDto.prototype, "amount", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)([
-        'MINUTE',
-        'HOUR',
-        'DAY'
-    ]),
+    (0, class_validator_1.IsEnum)(['MINUTE', 'HOUR', 'DAY']),
     __metadata("design:type", String)
 ], CreateRuleDto.prototype, "unit", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)([
-        'BEFORE',
-        'AFTER'
-    ]),
+    (0, class_validator_1.IsEnum)(['BEFORE', 'AFTER']),
     __metadata("design:type", String)
 ], CreateRuleDto.prototype, "type", void 0);
 //# sourceMappingURL=create-rule.dto.js.map

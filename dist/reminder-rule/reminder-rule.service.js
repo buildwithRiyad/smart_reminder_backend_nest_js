@@ -25,45 +25,48 @@ let ReminderRuleService = class ReminderRuleService {
     }
     async createRules(dto) {
         const event = await this.eventRepo.findOne({
-            where: {
-                id: dto.eventId
-            }
+            where: { id: dto.eventId },
         });
         if (!event) {
-            throw new common_1.NotFoundException("Event not found");
+            throw new common_1.NotFoundException(`Event with ID "${dto.eventId}" not found`);
         }
-        const rule = this.ruleRepo.create({
-            amount: dto.amount,
-            unit: dto.unit,
-            type: dto.type,
-            event
-        });
+        const rule = new reminder_rule_entity_1.ReminderRule();
+        rule.amount = dto.amount;
+        rule.unit = dto.unit;
+        rule.type = dto.type;
+        rule.event = event;
         return this.ruleRepo.save(rule);
+    }
+    async findByEvent(eventId) {
+        return this.ruleRepo.find({
+            where: { eventId },
+            order: { createdAt: 'ASC' },
+        });
     }
     calculateReminderDate(eventDate, amount, unit, type) {
         const date = new Date(eventDate);
-        if (type === "BEFORE") {
+        if (type === 'BEFORE') {
             switch (unit) {
-                case "DAY":
+                case 'DAY':
                     date.setDate(date.getDate() - amount);
                     break;
-                case "HOUR":
+                case 'HOUR':
                     date.setHours(date.getHours() - amount);
                     break;
-                case "MINUTE":
+                case 'MINUTE':
                     date.setMinutes(date.getMinutes() - amount);
                     break;
             }
         }
-        if (type === "AFTER") {
+        else if (type === 'AFTER') {
             switch (unit) {
-                case "DAY":
+                case 'DAY':
                     date.setDate(date.getDate() + amount);
                     break;
-                case "HOUR":
+                case 'HOUR':
                     date.setHours(date.getHours() + amount);
                     break;
-                case "MINUTE":
+                case 'MINUTE':
                     date.setMinutes(date.getMinutes() + amount);
                     break;
             }
@@ -72,14 +75,12 @@ let ReminderRuleService = class ReminderRuleService {
     }
     async deleteRules(id) {
         const rule = await this.ruleRepo.findOne({
-            where: {
-                id
-            }
+            where: { id },
         });
         if (!rule) {
-            throw new common_1.NotFoundException("Rule not found");
+            throw new common_1.NotFoundException(`Rule with ID "${id}" not found`);
         }
-        return this.ruleRepo.remove(rule);
+        await this.ruleRepo.remove(rule);
     }
 };
 exports.ReminderRuleService = ReminderRuleService;

@@ -19,20 +19,12 @@ exports.EventsModule = EventsModule;
 exports.EventsModule = EventsModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([
-                event_entity_1.Event
-            ]),
+            typeorm_1.TypeOrmModule.forFeature([event_entity_1.Event]),
             reminder_pattern_module_1.ReminderPatternModule,
         ],
-        controllers: [
-            events_controller_1.EventsController
-        ],
-        providers: [
-            events_service_1.EventsService
-        ],
-        exports: [
-            events_service_1.EventsService
-        ]
+        controllers: [events_controller_1.EventsController],
+        providers: [events_service_1.EventsService],
+        exports: [events_service_1.EventsService],
     })
 ], EventsModule);
 //# sourceMappingURL=events.module.js.map

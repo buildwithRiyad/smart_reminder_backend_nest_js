@@ -7,6 +7,7 @@ export declare class ReminderRuleService {
     private eventRepo;
     constructor(ruleRepo: Repository<ReminderRule>, eventRepo: Repository<Event>);
     createRules(dto: CreateRuleDto): Promise<ReminderRule>;
-    calculateReminderDate(eventDate: Date, amount: number, unit: string, type: string): Date;
-    deleteRules(id: string): Promise<ReminderRule>;
+    findByEvent(eventId: string): Promise<ReminderRule[]>;
+    calculateReminderDate(eventDate: Date, amount: number, unit: 'MINUTE' | 'HOUR' | 'DAY', type: 'BEFORE' | 'AFTER'): Date;
+    deleteRules(id: string): Promise<void>;
 }

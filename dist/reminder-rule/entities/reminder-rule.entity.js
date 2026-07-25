@@ -21,38 +21,22 @@ __decorate([
     __metadata("design:type", String)
 ], ReminderRule.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({
-        name: 'event_id',
-        nullable: true
-    }),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({ name: 'event_id', nullable: true }),
+    __metadata("design:type", Object)
 ], ReminderRule.prototype, "eventId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => event_entity_1.Event, event => event.rules, {
-        nullable: true,
-        onDelete: 'CASCADE'
-    }),
-    (0, typeorm_1.JoinColumn)({
-        name: 'event_id'
-    }),
-    __metadata("design:type", event_entity_1.Event)
+    (0, typeorm_1.ManyToOne)(() => event_entity_1.Event, (event) => event.rules, { nullable: true, onDelete: 'CASCADE' }),
+    (0, typeorm_1.JoinColumn)({ name: 'event_id' }),
+    __metadata("design:type", Object)
 ], ReminderRule.prototype, "event", void 0);
 __decorate([
-    (0, typeorm_1.Column)({
-        name: 'pattern_id',
-        nullable: true
-    }),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({ name: 'pattern_id', nullable: true }),
+    __metadata("design:type", Object)
 ], ReminderRule.prototype, "patternId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => reminder_pattern_entity_1.ReminderPattern, pattern => pattern.rules, {
-        nullable: true,
-        onDelete: 'CASCADE'
-    }),
-    (0, typeorm_1.JoinColumn)({
-        name: 'pattern_id'
-    }),
-    __metadata("design:type", reminder_pattern_entity_1.ReminderPattern)
+    (0, typeorm_1.ManyToOne)(() => reminder_pattern_entity_1.ReminderPattern, (pattern) => pattern.rules, { nullable: true, onDelete: 'CASCADE' }),
+    (0, typeorm_1.JoinColumn)({ name: 'pattern_id' }),
+    __metadata("design:type", Object)
 ], ReminderRule.prototype, "pattern", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
@@ -61,45 +45,31 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
-        enum: [
-            'MINUTE',
-            'HOUR',
-            'DAY'
-        ]
+        enum: ['MINUTE', 'HOUR', 'DAY'],
     }),
     __metadata("design:type", String)
 ], ReminderRule.prototype, "unit", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
-        enum: [
-            'BEFORE',
-            'AFTER'
-        ]
+        enum: ['BEFORE', 'AFTER'],
     }),
     __metadata("design:type", String)
 ], ReminderRule.prototype, "type", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
-        enum: [
-            'EMAIL',
-            'TELEGRAM'
-        ],
-        default: 'EMAIL'
+        enum: ['EMAIL', 'TELEGRAM'],
+        default: 'EMAIL',
     }),
     __metadata("design:type", String)
 ], ReminderRule.prototype, "channel", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)({
-        name: 'created_at'
-    }),
+    (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
     __metadata("design:type", Date)
 ], ReminderRule.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.UpdateDateColumn)({
-        name: 'updated_at'
-    }),
+    (0, typeorm_1.UpdateDateColumn)({ name: 'updated_at' }),
     __metadata("design:type", Date)
 ], ReminderRule.prototype, "updatedAt", void 0);
 exports.ReminderRule = ReminderRule = __decorate([
