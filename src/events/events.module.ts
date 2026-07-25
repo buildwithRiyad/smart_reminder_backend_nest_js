@@ -10,7 +10,9 @@ import { EventsService } from './events.service';
 @Module({
 
 imports:[
- TypeOrmModule.forFeature([Event])
+ TypeOrmModule.forFeature([
+  Event
+ ])
 ],
 
 
@@ -21,6 +23,11 @@ controllers:[
 
 providers:[
  EventsService
+],
+
+
+exports:[
+ TypeOrmModule
 ]
 
 })

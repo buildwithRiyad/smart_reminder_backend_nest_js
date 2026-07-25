@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { EventsModule } from './events/events.module';  
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
+import { ReminderRuleModule } from './reminder-rule/reminder-rule.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { UsersModule } from './users/users.module';
 
     AuthModule,
     EventsModule,
-    UsersModule 
+    UsersModule,
+    ReminderRuleModule
   ],
 })
 export class AppModule {}

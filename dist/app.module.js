@@ -13,6 +13,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const auth_module_1 = require("./auth/auth.module");
 const events_module_1 = require("./events/events.module");
 const users_module_1 = require("./users/users.module");
+const reminder_rule_module_1 = require("./reminder-rule/reminder-rule.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -34,7 +35,8 @@ exports.AppModule = AppModule = __decorate([
             }),
             auth_module_1.AuthModule,
             events_module_1.EventsModule,
-            users_module_1.UsersModule
+            users_module_1.UsersModule,
+            reminder_rule_module_1.ReminderRuleModule
         ],
     })
 ], AppModule);

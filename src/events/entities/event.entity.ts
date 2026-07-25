@@ -3,11 +3,13 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  OneToMany,
   CreateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
 
 import { User } from '../../users/entities/user.entity';
+import { ReminderRule } from '../../reminder-rule/entities/reminder-rule.entity';
 
 
 @Entity('events')
@@ -15,67 +17,79 @@ export class Event {
 
 
   @PrimaryGeneratedColumn('uuid')
-  id:string;
+  id: string;
 
 
   @Column()
-  title:string;
+  title: string;
 
 
   @Column({
-    type:'text',
-    nullable:true
+    type: 'text',
+    nullable: true,
   })
-  description:string;
+  description: string;
 
 
   @Column()
-  eventDate:Date;
+  eventDate: Date;
 
 
   @Column({
-    nullable:true
+    nullable: true,
   })
-  eventTime:string;
+  eventTime: string;
 
 
   @Column({
-    default:'Asia/Dhaka'
+    default: 'Asia/Dhaka',
   })
-  timezone:string;
+  timezone: string;
 
 
   @Column()
-  category:string;
+  category: string;
 
 
   @Column({
-    default:'ACTIVE'
+    default: 'ACTIVE',
   })
-  status:string;
+  status: string;
 
 
   @Column({
-    default:false
+    default: false,
   })
-  isRecurring:boolean;
+  isRecurring: boolean;
 
 
+
+  // User Relation
   @ManyToOne(
-    ()=>User,
-    user=>user.events,
+    () => User,
+    user => user.events,
     {
-      onDelete:'CASCADE'
+      onDelete: 'CASCADE',
     }
   )
-  user:User;
+  user: User;
+
+
+
+  // Event -> Reminder Rules Relation
+  @OneToMany(
+    () => ReminderRule,
+    rule => rule.event
+  )
+  rules: ReminderRule[];
+
 
 
   @DeleteDateColumn()
-  deletedAt:Date;
+  deletedAt: Date;
 
 
   @CreateDateColumn()
-  createdAt:Date;
+  createdAt: Date;
 
 }

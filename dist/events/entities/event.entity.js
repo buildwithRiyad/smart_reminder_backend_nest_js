@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Event = void 0;
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../../users/entities/user.entity");
+const reminder_rule_entity_1 = require("../../reminder-rule/entities/reminder-rule.entity");
 let Event = class Event {
 };
 exports.Event = Event;
@@ -26,7 +27,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({
         type: 'text',
-        nullable: true
+        nullable: true,
     }),
     __metadata("design:type", String)
 ], Event.prototype, "description", void 0);
@@ -36,13 +37,13 @@ __decorate([
 ], Event.prototype, "eventDate", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        nullable: true
+        nullable: true,
     }),
     __metadata("design:type", String)
 ], Event.prototype, "eventTime", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        default: 'Asia/Dhaka'
+        default: 'Asia/Dhaka',
     }),
     __metadata("design:type", String)
 ], Event.prototype, "timezone", void 0);
@@ -52,22 +53,26 @@ __decorate([
 ], Event.prototype, "category", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        default: 'ACTIVE'
+        default: 'ACTIVE',
     }),
     __metadata("design:type", String)
 ], Event.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        default: false
+        default: false,
     }),
     __metadata("design:type", Boolean)
 ], Event.prototype, "isRecurring", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.events, {
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
     }),
     __metadata("design:type", user_entity_1.User)
 ], Event.prototype, "user", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => reminder_rule_entity_1.ReminderRule, rule => rule.event),
+    __metadata("design:type", Array)
+], Event.prototype, "rules", void 0);
 __decorate([
     (0, typeorm_1.DeleteDateColumn)(),
     __metadata("design:type", Date)

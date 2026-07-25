@@ -1,4 +1,5 @@
 import { User } from '../../users/entities/user.entity';
+import { ReminderRule } from '../../reminder-rule/entities/reminder-rule.entity';
 export declare class Event {
     id: string;
     title: string;
@@ -10,6 +11,7 @@ export declare class Event {
     status: string;
     isRecurring: boolean;
     user: User;
+    rules: ReminderRule[];
     deletedAt: Date;
     createdAt: Date;
 }
