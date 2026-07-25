@@ -9,73 +9,74 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Event = void 0;
 const typeorm_1 = require("typeorm");
-const event_entity_1 = require("../../events/entities/event.entity");
-let User = class User {
+const user_entity_1 = require("../../users/entities/user.entity");
+let Event = class Event {
 };
-exports.User = User;
+exports.Event = Event;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
-], User.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)({
-        unique: true,
-    }),
-    __metadata("design:type", String)
-], User.prototype, "googleId", void 0);
+], Event.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], User.prototype, "name", void 0);
+], Event.prototype, "title", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        unique: true,
+        type: 'text',
+        nullable: true
     }),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], Event.prototype, "description", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Date)
+], Event.prototype, "eventDate", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        nullable: true,
+        nullable: true
     }),
     __metadata("design:type", String)
-], User.prototype, "avatar", void 0);
+], Event.prototype, "eventTime", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        nullable: true,
+        default: 'Asia/Dhaka'
     }),
     __metadata("design:type", String)
-], User.prototype, "telegramChatId", void 0);
+], Event.prototype, "timezone", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Event.prototype, "category", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        default: 'Asia/Dhaka',
+        default: 'ACTIVE'
     }),
     __metadata("design:type", String)
-], User.prototype, "timezone", void 0);
+], Event.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: 'jsonb',
-        default: {
-            email: true,
-            telegram: false,
-        },
+        default: false
     }),
-    __metadata("design:type", Object)
-], User.prototype, "notificationPreferences", void 0);
+    __metadata("design:type", Boolean)
+], Event.prototype, "isRecurring", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => event_entity_1.Event, event => event.user),
-    __metadata("design:type", Array)
-], User.prototype, "events", void 0);
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.events, {
+        onDelete: 'CASCADE'
+    }),
+    __metadata("design:type", user_entity_1.User)
+], Event.prototype, "user", void 0);
+__decorate([
+    (0, typeorm_1.DeleteDateColumn)(),
+    __metadata("design:type", Date)
+], Event.prototype, "deletedAt", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], User.prototype, "createdAt", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", Date)
-], User.prototype, "updatedAt", void 0);
-exports.User = User = __decorate([
-    (0, typeorm_1.Entity)('users')
-], User);
-//# sourceMappingURL=user.entity.js.map
+], Event.prototype, "createdAt", void 0);
+exports.Event = Event = __decorate([
+    (0, typeorm_1.Entity)('events')
+], Event);
+//# sourceMappingURL=event.entity.js.map

@@ -4,7 +4,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import { Event } from '../../events/entities/event.entity';
+
 
 @Entity('users')
 export class User {
@@ -60,10 +64,19 @@ export class User {
   };
 
 
+  // User -> Events Relation
+  @OneToMany(
+    () => Event,
+    event => event.user
+  )
+  events: Event[];
+
+
   @CreateDateColumn()
   createdAt: Date;
 
 
   @UpdateDateColumn()
   updatedAt: Date;
+
 }

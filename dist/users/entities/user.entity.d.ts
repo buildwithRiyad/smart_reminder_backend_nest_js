@@ -1,3 +1,4 @@
+import { Event } from '../../events/entities/event.entity';
 export declare class User {
     id: string;
     googleId: string;
@@ -10,6 +11,7 @@ export declare class User {
         email: boolean;
         telegram: boolean;
     };
+    events: Event[];
     createdAt: Date;
     updatedAt: Date;
 }
