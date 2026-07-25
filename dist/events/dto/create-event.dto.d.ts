@@ -6,4 +6,5 @@ export declare class CreateEventDto {
     timezone?: string;
     category: string;
     isRecurring?: boolean;
+    patternId?: string;
 }

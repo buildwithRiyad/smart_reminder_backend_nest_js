@@ -17,29 +17,41 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const event_entity_1 = require("./entities/event.entity");
+const reminder_pattern_service_1 = require("../reminder-patterns/reminder-pattern.service");
 let EventsService = class EventsService {
-    constructor(eventRepository) {
+    constructor(eventRepository, reminderPatternService) {
         this.eventRepository = eventRepository;
+        this.reminderPatternService = reminderPatternService;
     }
     async create(user, dto) {
-        const event = this.eventRepository.create({
-            ...dto,
+        const event = await this.eventRepository.save({
+            title: dto.title,
+            description: dto.description,
             eventDate: new Date(dto.eventDate),
+            eventTime: dto.eventTime,
             timezone: dto.timezone || 'Asia/Dhaka',
-            user
+            category: dto.category,
+            isRecurring: dto.isRecurring || false,
+            user,
         });
-        return this.eventRepository.save(event);
+        if (dto.patternId) {
+            await this.reminderPatternService.applyPatternToEvent(dto.patternId, event.id);
+        }
+        return event;
     }
     async findAll(userId) {
         return this.eventRepository.find({
             where: {
                 user: {
-                    id: userId
-                }
+                    id: userId,
+                },
             },
             order: {
-                createdAt: 'DESC'
-            }
+                createdAt: 'DESC',
+            },
+            relations: [
+                'reminderRules',
+            ],
         });
     }
 };
@@ -47,6 +59,7 @@ exports.EventsService = EventsService;
 exports.EventsService = EventsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(event_entity_1.Event)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        reminder_pattern_service_1.ReminderPatternService])
 ], EventsService);
 //# sourceMappingURL=events.service.js.map

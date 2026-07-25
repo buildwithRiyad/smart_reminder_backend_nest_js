@@ -46,4 +46,9 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], CreateEventDto.prototype, "isRecurring", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], CreateEventDto.prototype, "patternId", void 0);
 //# sourceMappingURL=create-event.dto.js.map

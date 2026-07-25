@@ -12,6 +12,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const event_entity_1 = require("./entities/event.entity");
 const events_controller_1 = require("./events.controller");
 const events_service_1 = require("./events.service");
+const reminder_pattern_module_1 = require("../reminder-patterns/reminder-pattern.module");
 let EventsModule = class EventsModule {
 };
 exports.EventsModule = EventsModule;
@@ -20,7 +21,8 @@ exports.EventsModule = EventsModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forFeature([
                 event_entity_1.Event
-            ])
+            ]),
+            reminder_pattern_module_1.ReminderPatternModule,
         ],
         controllers: [
             events_controller_1.EventsController
@@ -29,7 +31,7 @@ exports.EventsModule = EventsModule = __decorate([
             events_service_1.EventsService
         ],
         exports: [
-            typeorm_1.TypeOrmModule
+            events_service_1.EventsService
         ]
     })
 ], EventsModule);

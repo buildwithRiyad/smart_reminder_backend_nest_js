@@ -3,32 +3,58 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from './auth/auth.module';
-import { EventsModule } from './events/events.module';  
-import { User } from './users/entities/user.entity';
+import { EventsModule } from './events/events.module';
 import { UsersModule } from './users/users.module';
-import { ReminderRuleModule } from './reminder-rule/reminder-rule.module';
+
+import { ReminderRuleModule } 
+from './reminder-rule/reminder-rule.module';
+
+import { ReminderPatternModule } from './reminder-patterns/reminder-pattern.module'; // ✅ singular "pattern", singular "module"
+
+
+
 
 @Module({
   imports: [
+
     ConfigModule.forRoot({
       isGlobal: true,
     }),
 
+
     TypeOrmModule.forRoot({
+
       type: 'postgres',
+
       host: process.env.DB_HOST,
+
       port: Number(process.env.DB_PORT),
+
       username: process.env.DB_USER,
+
       password: process.env.DB_PASSWORD,
+
       database: process.env.DB_NAME,
+
       autoLoadEntities: true,
+
       synchronize: true,
+
     }),
 
+
+
     AuthModule,
+
     EventsModule,
+
     UsersModule,
-    ReminderRuleModule
+
+    ReminderRuleModule,
+
+        ReminderPatternModule,   // ✅ export name is ReminderPatternModule
+
+
   ],
 })
 export class AppModule {}
